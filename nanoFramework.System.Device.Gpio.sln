@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Windows.Devices.Gpio", "Windows.Devices.Gpio\Windows.Devices.Gpio.nfproj", "{2FC2FDB5-DCEC-4B99-B9AD-5E45CED385E5}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Device.Gpio", "System.Device.Gpio\System.Device.Gpio.nfproj", "{2FC2FDB5-DCEC-4B99-B9AD-5E45CED385E5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C10F0984-7DFD-4D08-A304-56CFC0966E61}"
 	ProjectSection(SolutionItems) = preProject
-		nanoFramework.Windows.Devices.Gpio.DELIVERABLES.nuspec = nanoFramework.Windows.Devices.Gpio.DELIVERABLES.nuspec
-		nanoFramework.Windows.Devices.Gpio.nuspec = nanoFramework.Windows.Devices.Gpio.nuspec
+		nanoFramework.System.Device.Gpio.DELIVERABLES.nuspec = nanoFramework.System.Device.Gpio.DELIVERABLES.nuspec
+		nanoFramework.System.Device.Gpio.nuspec = nanoFramework.System.Device.Gpio.nuspec
 		NuGet.Config = NuGet.Config
 		version.json = version.json
 	EndProjectSection
