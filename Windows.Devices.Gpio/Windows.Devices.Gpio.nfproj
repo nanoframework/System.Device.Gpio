@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildToolsPath)..\..\..\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>2fc2fdb5-dcec-4b99-b9ad-5e45ced385e5</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>Windows.Devices.Gpio</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <NF_IsCoreLibrary>True</NF_IsCoreLibrary>
+    <DocumentationFile>bin\$(Configuration)\Windows.Devices.Gpio.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- override default options for MetaDataProcessor -->
+    <NF_GenerateStubsDirectory>bin\$(Configuration)\Stubs</NF_GenerateStubsDirectory>
+    <NF_GenerateSkeletonProjectName>win_dev_gpio_native</NF_GenerateSkeletonProjectName>
+    <Name>Windows.Devices.Gpio</Name>
+  </PropertyGroup>
+  <ItemGroup>
+    <NFMDP_PE_ExcludeClassByName Include="GpioOpenStatus">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+    <NFMDP_PE_ExcludeClassByName Include="GpioPinEdge">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+    <NFMDP_PE_ExcludeClassByName Include="GpioSharingMode">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+    <NFMDP_PE_ExcludeClassByName Include="GpioPinEvent">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+    <NFMDP_PE_ExcludeClassByName Include="GpioPinEventListener">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+    <NFMDP_PE_ExcludeClassByName Include="GpioPinValueChangedEventArgs">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+    <NFMDP_PE_ExcludeClassByName Include="ThisAssembly">
+      <InProject>false</InProject>
+    </NFMDP_PE_ExcludeClassByName>
+  </ItemGroup>
+  <ItemGroup>
+    <NFMDP_PE_LoadHints Include="..\packages\nanoFramework.CoreLibrary.1.9.0-preview.5\lib\mscorlib.dll">
+      <InProject>false</InProject>
+    </NFMDP_PE_LoadHints>
+    <NFMDP_PE_LoadHints Include="..\packages\nanoFramework.Runtime.Events.1.8.2-preview.5\lib\nanoFramework.Runtime.Events.dll">
+      <InProject>false</InProject>
+    </NFMDP_PE_LoadHints>
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="Extensions\Gpio​PinExtensions.cs" />
+    <Compile Include="GpioChangePolarity.cs" />
+    <Compile Include="GpioController.cs" />
+    <Compile Include="GpioOpenStatus.cs" />
+    <Compile Include="GpioPin.cs" />
+    <Compile Include="GpioPinDriveMode.cs" />
+    <Compile Include="GpioPinEdge.cs" />
+    <Compile Include="GpioPinEvent.cs" />
+    <Compile Include="GpioPinEventListener.cs" />
+    <Compile Include="GpioPinValue.cs" />
+    <Compile Include="GpioPinValueChangedEventArgs.cs" />
+    <Compile Include="GpioSharingMode.cs" />
+    <Compile Include="Gpio​Change​Count.cs" />
+    <Compile Include="Gpio​Change​Counter.cs" />
+    <Compile Include="IGpioController.cs" />
+    <Compile Include="IGpioPin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="key.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib, Version=1.9.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.9.0-preview.5\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.8.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.8.2-preview.5\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+  <Import Project="..\packages\Nerdbank.GitVersioning.3.1.91\build\Nerdbank.GitVersioning.targets" Condition="Exists('..\packages\Nerdbank.GitVersioning.3.1.91\build\Nerdbank.GitVersioning.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Nerdbank.GitVersioning.3.1.91\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Nerdbank.GitVersioning.3.1.91\build\Nerdbank.GitVersioning.targets'))" />
+  </Target>
+</Project>
