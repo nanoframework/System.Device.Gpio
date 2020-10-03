@@ -81,6 +81,23 @@
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.8.2-preview.5\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Windows.Devices.Gpio, Version=1.5.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Windows.Devices.Gpio.1.5.2-preview.8\lib\Windows.Devices.Gpio.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="WaitForEventResult.cs" />
+    <Compile Include="WaitEventResult.cs" />
+    <Compile Include="PinValuePair.cs" />
+    <Compile Include="PinValueChangedEventArgs.cs" />
+    <Compile Include="PinValue.cs" />
+    <Compile Include="PinNumberingScheme.cs" />
+    <Compile Include="PinMode.cs" />
+    <Compile Include="PinEventTypes.cs" />
+    <Compile Include="PinChangeEventHandler.cs" />
+    <Compile Include="GpioController.cs" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
