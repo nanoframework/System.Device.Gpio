@@ -2,12 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using nanoFramework.Runtime.Events;
+
 namespace System.Device.Gpio
 {
     /// <summary>
     /// Arguments passed in when an event is triggered by the GPIO.
     /// </summary>
-    public class PinValueChangedEventArgs
+    public class PinValueChangedEventArgs : BaseEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PinValueChangedEventArgs"/> class.
