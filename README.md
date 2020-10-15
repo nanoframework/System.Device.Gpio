@@ -10,8 +10,8 @@
 
 | Component | Build Status | NuGet Package |
 |:-|---|---|
-| System.Device.Gpio | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=16?branchName=master) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
-| System.Device.Gpio (preview) | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=16?branchName=develop) | [![](https://badgen.net/badge/NuGet/preview/D7B023?icon=https://simpleicons.now.sh/azuredevops/fff)](https://dev.azure.com/nanoframework/feed/_packaging?_a=package&feed=sandbox&package=nanoFramework.System.Device.Gpio&protocolType=NuGet&view=overview) |
+| System.Device.Gpio | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=master) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
+| System.Device.Gpio (preview) | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=develop) | [![](https://badgen.net/badge/NuGet/preview/D7B023?icon=https://simpleicons.now.sh/azuredevops/fff)](https://dev.azure.com/nanoframework/feed/_packaging?_a=package&feed=sandbox&package=nanoFramework.System.Device.Gpio&protocolType=NuGet&view=overview) |
 
 ## Feedback and documentation
 
