@@ -57,21 +57,16 @@ namespace System.Device.Gpio
         /// Opens a pin in order for it to be ready to use.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
+        /// <returns>The opened GPIO pin.</returns>
         /// <exception cref="InvalidOperationException">This exception will be thrown if the pin is already open.</exception>
-        public void OpenPin(int pinNumber)
+        public GpioPin OpenPin(int pinNumber)
         {
-            var pin = new Gpio​Pin(pinNumber);
+            var gpioPin = InternalOpenPin(pinNumber);
 
-            if (pin.Init())
-            {
-                // add to array
-                s_GpioPins.Add(new GpioPinBundle() { PinNumber = pinNumber, GpioPin = pin });
+            // add to array
+            s_GpioPins.Add(new GpioPinBundle() { PinNumber = pinNumber, GpioPin = gpioPin });
 
-                // done here
-                return;
-            }
-
-            throw new InvalidOperationException();
+            return gpioPin;
         }
 
         /// <summary>
@@ -79,12 +74,37 @@ namespace System.Device.Gpio
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <param name="mode">The mode to be set.</param>
-        public void OpenPin(
+        /// <returns>The opened GPIO pin.</returns>
+        public GpioPin OpenPin(
             int pinNumber,
             PinMode mode)
         {
-            OpenPin(pinNumber);
+            var gpioPin = InternalOpenPin(pinNumber);
+
             SetPinMode(pinNumber, mode);
+
+            // add to array
+            s_GpioPins.Add(new GpioPinBundle() { PinNumber = pinNumber, GpioPin = gpioPin });
+
+            return gpioPin;
+        }
+
+        /// <summary>
+        /// Opens a pin in order for it to be ready to use.
+        /// </summary>
+        /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
+        /// <exception cref="InvalidOperationException">This exception will be thrown if the pin is already open.</exception>
+        private GpioPin InternalOpenPin(int pinNumber)
+        {
+            var pin = new Gpio​Pin(pinNumber);
+
+            if (pin.Init())
+            {
+                // done here
+                return pin;
+            }
+
+            throw new InvalidOperationException();
         }
 
         /// <summary>
