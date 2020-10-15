@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/e316141a3fa09e108056b5532d334cda8608bfbc...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.4...HEAD)
+
+**Implemented enhancements:**
+
+- Improve Controller to have OpenGpio methods returning a GpioPin [\#3](https://github.com/nanoframework/lib-System.Device.Gpio/pull/3)
+
+## [v1.0.0-preview.4](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.4) (2020-10-15)
+
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/e316141a3fa09e108056b5532d334cda8608bfbc...v1.0.0-preview.4)
 
 **Implemented enhancements:**
 
