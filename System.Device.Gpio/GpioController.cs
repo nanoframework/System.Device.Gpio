@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace System.Device.Gpio
 {
@@ -12,15 +12,13 @@ namespace System.Device.Gpio
     /// </summary>
     public sealed class GpioController : IDisposable
     {
-        private Windows.Devices.Gpio.GpioController _controller;
-        private static Windows.Devices.Gpio.GpioPin[] _gpioPins;
-        private static PinEventTypes[] _gpioEvents;
-        private static PinChangeEventHandler[] _gpioPinChange;
-        private static PinEventTypes[] _gpioEventsHappening;
+        private static readonly ArrayList s_GpioPins = new ArrayList();
 
         // this is used as the lock object 
         // a lock is required because multiple threads can access the GPIO controller
-        static object _syncLock;
+        static readonly object _syncLock = new object();
+
+        private bool _disposedValue;
 
         /// <summary>
         /// Initializes a new instance of the System.Device.Gpio.GpioController class that
@@ -28,7 +26,6 @@ namespace System.Device.Gpio
         /// </summary>
         public GpioController()
         {
-            GetController();
         }
 
         /// <summary>
@@ -42,26 +39,6 @@ namespace System.Device.Gpio
             NumberingScheme = numberingScheme;
         }
 
-        private void GetController()
-        {
-            if (_syncLock == null)
-            {
-                _syncLock = new object();
-            }
-
-            lock (_syncLock)
-            {
-                _controller = Windows.Devices.Gpio.GpioController.GetDefault();
-                if (_gpioPins == null)
-                {
-                    _gpioPins = new Windows.Devices.Gpio.GpioPin[_controller.PinCount];
-                    _gpioEvents = new PinEventTypes[_controller.PinCount];
-                    _gpioEventsHappening = new PinEventTypes[_controller.PinCount];
-                    _gpioPinChange = new PinChangeEventHandler[_controller.PinCount];
-                }
-            }
-        }
-
         /// <summary>
         /// The numbering scheme used to represent pins provided by the controller.
         /// </summary>
@@ -70,24 +47,66 @@ namespace System.Device.Gpio
         /// <summary>
         /// The number of pins provided by the controller.
         /// </summary>
-        public int PinCount => _controller.PinCount;
+        public extern int PinCount
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+        }
+
+        /// <summary>
+        /// Opens a pin in order for it to be ready to use.
+        /// </summary>
+        /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
+        /// <exception cref="InvalidOperationException">This exception will be thrown if the pin is already open.</exception>
+        public void OpenPin(int pinNumber)
+        {
+            var pin = new Gpio​Pin(pinNumber);
+
+            if (pin.Init())
+            {
+                // add to array
+                s_GpioPins.Add(new GpioPinBundle() { PinNumber = pinNumber, GpioPin = pin });
+
+                // done here
+                return;
+            }
+
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Opens a pin and sets it to a specific mode.
+        /// </summary>
+        /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
+        /// <param name="mode">The mode to be set.</param>
+        public void OpenPin(
+            int pinNumber,
+            PinMode mode)
+        {
+            OpenPin(pinNumber);
+            SetPinMode(pinNumber, mode);
+        }
 
         /// <summary>
         /// Closes an open pin.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
+        /// <exception cref="InvalidOperationException">This exception will be thrown on an attempt to close a pin that hasn't been opened.</exception>
         public void ClosePin(int pinNumber)
         {
+            // need to find the pin 1st
+            for (int i = 0; i < s_GpioPins.Count; i++)
+            {
+                if (((GpioPinBundle)s_GpioPins[i]).PinNumber == pinNumber)
+                {
+                    ((GpioPinBundle)s_GpioPins[i]).GpioPin.Dispose();
 
-            if (_gpioPins[pinNumber] != null)
-            {
-                _gpioPins[pinNumber].Dispose();
-                _gpioPins[pinNumber] = null;
+                    // done here
+                    return;
+                }
             }
-            else
-            {
-                throw new IOException($"Port {pinNumber} is not open");
-            }
+
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -95,11 +114,38 @@ namespace System.Device.Gpio
         /// </summary>
         public void Dispose()
         {
-            for (int i = 0; i < _gpioPins.Length; i++)
+            lock (_syncLock)
             {
-                ClosePin(i);
+                if (!_disposedValue)
+                {
+                    Dispose(true);
+
+                    GC.SuppressFinalize(this);
+                }
             }
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    // 1st dispose the pins that where opened through the controller
+                    for (int i = 0; i < s_GpioPins.Count; i++)
+                    {
+                        ((GpioPinBundle)s_GpioPins[i]).GpioPin.Dispose();
+                    }
+                }
+
+                DisposeNative();
+
+                _disposedValue = true;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void DisposeNative();
 
         /// <summary>
         /// Gets the mode of a pin.
@@ -108,13 +154,16 @@ namespace System.Device.Gpio
         /// <returns>The mode of the pin.</returns>
         public PinMode GetPinMode(int pinNumber)
         {
-            if (_gpioPins[pinNumber] == null)
+            // need to find the pin 1st
+            for (int i = 0; i < s_GpioPins.Count; i++)
             {
-                throw new IOException($"Port {pinNumber} is not open");
+                if (((GpioPinBundle)s_GpioPins[i]).PinNumber == pinNumber)
+                {
+                    return ((GpioPinBundle)s_GpioPins[i]).GpioPin.GetDriveMode();
+                }
             }
 
-            // It is safe to cast, enums are the same
-            return (PinMode)_gpioPins[pinNumber].GetDriveMode();
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -123,46 +172,28 @@ namespace System.Device.Gpio
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <param name="mode">The mode to check.</param>
         /// <returns>The status if the pin supports the mode.</returns>
-        public bool IsPinModeSupported(int pinNumber, PinMode mode) => _gpioPins[pinNumber].IsDriveModeSupported((Windows.Devices.Gpio.GpioPinDriveMode)mode);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern bool IsPinModeSupported(
+            int pinNumber,
+            PinMode mode);
 
         /// <summary>
         ///  Checks if a specific pin is open.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <returns>The status if the pin is open or closed.</returns>
-        public bool IsPinOpen(int pinNumber) => _gpioPins[pinNumber] != null;
-
-        /// <summary>
-        /// Opens a pin in order for it to be ready to use.
-        /// </summary>
-        /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
-        public void OpenPin(int pinNumber)
-        {
-            if (IsPinOpen(pinNumber))
-            {
-                throw new IOException($"Pin {pinNumber} already open");
-            }
-
-            _gpioPins[pinNumber] = _controller.OpenPin(pinNumber);
-        }
-
-        /// <summary>
-        /// Opens a pin and sets it to a specific mode.
-        /// </summary>
-        /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
-        /// <param name="mode">The mode to be set.</param>
-        public void OpenPin(int pinNumber, PinMode mode)
-        {
-            OpenPin(pinNumber);
-            SetPinMode(pinNumber, mode);
-        }
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern bool IsPinOpen(int pinNumber);
 
         /// <summary>
         /// Reads the current value of a pin.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <returns>The value of the pin.</returns>
-        public PinValue Read(int pinNumber) => _gpioPins[pinNumber].Read() == Windows.Devices.Gpio.GpioPinValue.High ? PinValue.High : PinValue.Low;
+        public PinValue Read(int pinNumber)
+        {
+            return NativeRead(pinNumber) == 1 ? PinValue.High : PinValue.Low;
+        }
 
         /// <summary>
         /// Adds a callback that will be invoked when pinNumber has an event of type eventType.
@@ -170,24 +201,69 @@ namespace System.Device.Gpio
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <param name="eventTypes">The event types to wait for.</param>
         /// <param name="callback">The callback method that will be invoked.</param>
-        public void RegisterCallbackForPinValueChangedEvent(int pinNumber, PinEventTypes eventTypes, PinChangeEventHandler callback)
+        /// <exception cref="InvalidOperationException">This exception will be thrown on an attempt to register a callback to a pin that hasn't been opened.</exception>
+        public void RegisterCallbackForPinValueChangedEvent(
+            int pinNumber,
+            PinEventTypes eventTypes,
+            PinChangeEventHandler callback)
         {
-            _gpioEvents[pinNumber] = eventTypes;
-            _gpioPinChange[pinNumber] = callback;
-            _gpioPins[pinNumber].ValueChanged += GpioControllerValueChanged;
-        }
-
-        private void GpioControllerValueChanged(object sender, Windows.Devices.Gpio.GpioPinValueChangedEventArgs e)
-        {
-            var gpioPinNumber = ((Windows.Devices.Gpio.GpioPin)sender).PinNumber;
-            if ((e.Edge == Windows.Devices.Gpio.GpioPinEdge.FallingEdge) && (_gpioEvents[gpioPinNumber] == PinEventTypes.Falling))
+            // need to find the pin 1st
+            for (int i = 0; i < s_GpioPins.Count; i++)
             {
-                _gpioPinChange[gpioPinNumber].Invoke(this, new PinValueChangedEventArgs(PinEventTypes.Falling, gpioPinNumber));
+                if (((GpioPinBundle)s_GpioPins[i]).PinNumber == pinNumber)
+                {
+                    // get GpioPin
+                    var gpioPin = (GpioPinBundle)s_GpioPins[i];
+
+                    // set everything event related
+                    gpioPin.GpioEvents = eventTypes;
+                    gpioPin.GpioPinChange = callback;
+                    gpioPin.GpioPin.ValueChanged += GpioControllerValueChanged;
+
+                    // done here
+                    return;
+                }
             }
 
-            if ((e.Edge == Windows.Devices.Gpio.GpioPinEdge.RisingEdge) && (_gpioEvents[gpioPinNumber] == PinEventTypes.Rising))
+            throw new InvalidOperationException();
+        }
+
+        private void GpioControllerValueChanged(
+            object sender,
+            PinValueChangedEventArgs e)
+        {
+            // need to find the pin 1st
+            GpioPinBundle gpioPin = null;
+
+            for (int i = 0; i < s_GpioPins.Count; i++)
             {
-                _gpioPinChange[gpioPinNumber].Invoke(this, new PinValueChangedEventArgs(PinEventTypes.Rising, gpioPinNumber));
+                if (((GpioPinBundle)s_GpioPins[i]).PinNumber == e.PinNumber)
+                {
+                    gpioPin = (GpioPinBundle)s_GpioPins[i];
+
+                    // done here
+                    break;
+                }
+            }
+
+            // sanity check
+            if(gpioPin != null)
+            {
+                if (((gpioPin.GpioEvents & PinEventTypes.Falling) == PinEventTypes.Falling)
+                    && ((e.ChangeType & PinEventTypes.Falling) == PinEventTypes.Falling))
+                {
+                    gpioPin.GpioPinChange.Invoke(
+                        this,
+                        new PinValueChangedEventArgs(PinEventTypes.Falling, gpioPin.PinNumber));
+                }
+
+                if (((gpioPin.GpioEvents & PinEventTypes.Rising) == PinEventTypes.Rising)
+                    && ((e.ChangeType & PinEventTypes.Rising) == PinEventTypes.Rising))
+                {
+                    gpioPin.GpioPinChange.Invoke(
+                        this,
+                        new PinValueChangedEventArgs(PinEventTypes.Rising, gpioPin.PinNumber));
+                }
             }
         }
 
@@ -196,63 +272,35 @@ namespace System.Device.Gpio
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme</param>
         /// <param name="mode">The mode to be set.</param>
-        public void SetPinMode(int pinNumber, PinMode mode)
-        {
-            if (!IsPinOpen(pinNumber))
-            {
-                throw new IOException($"Pin {pinNumber} needs to be open");
-            }
-
-            // Safe cast, same enum on nanoFramework
-            _gpioPins[pinNumber].SetDriveMode((Windows.Devices.Gpio.GpioPinDriveMode)mode);
-        }
+        [MethodImpl(MethodImplOptions.InternalCall)] 
+        public extern void SetPinMode(
+            int pinNumber,
+            PinMode mode);
 
         /// <summary>
         /// Removes a callback that was being invoked for pin at pinNumber.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <param name="callback">The callback method that will be invoked.</param>
-        public void UnregisterCallbackForPinValueChangedEvent(int pinNumber, PinChangeEventHandler callback)
+        public void UnregisterCallbackForPinValueChangedEvent(
+            int pinNumber,
+            PinChangeEventHandler callback)
         {
-            _gpioEvents[pinNumber] = PinEventTypes.None;
-            _gpioPins[pinNumber].ValueChanged -= GpioControllerValueChanged;
-        }
-
-        /// <summary>
-        /// Blocks execution until an event of type eventType is received or a period of
-        /// time has expired.
-        /// </summary>
-        /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
-        /// <param name="eventTypes">The event types to wait for.</param>
-        /// <param name="timeout">The time to wait for the event.</param>
-        /// <returns>A structure that contains the result of the waiting operation.</returns>
-        public WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes, TimeSpan timeout)
-        {
-            _gpioEvents[pinNumber] = eventTypes;
-            _gpioEventsHappening[pinNumber] = PinEventTypes.None;
-            _gpioPins[pinNumber].ValueChanged += GpioControllerWaitForEvents;
-            DateTime dtTimeout = DateTime.UtcNow.Add(timeout);
-            while (DateTime.UtcNow < dtTimeout)
+            for (int i = 0; i < s_GpioPins.Count; i++)
             {
-                if (_gpioEventsHappening[pinNumber] != PinEventTypes.None)
+                if (((GpioPinBundle)s_GpioPins[i]).PinNumber == pinNumber)
                 {
-                    break;
+                    // get GpioPin
+                    var gpioPin = (GpioPinBundle)s_GpioPins[i];
+
+                    // clear everything event related
+                    gpioPin.GpioEvents = PinEventTypes.None;
+                    gpioPin.GpioPin.ValueChanged -= GpioControllerValueChanged;
+
+                    // done here
+                    return;
                 }
             }
-            _gpioPins[pinNumber].ValueChanged -= GpioControllerWaitForEvents;
-
-            if (_gpioEventsHappening[pinNumber] != PinEventTypes.None)
-            {
-                return new WaitForEventResult() { EventTypes = _gpioEventsHappening[pinNumber], TimedOut = false };
-            }
-
-            return new WaitForEventResult() { EventTypes = PinEventTypes.None, TimedOut = true };
-        }
-
-        private void GpioControllerWaitForEvents(object sender, Windows.Devices.Gpio.GpioPinValueChangedEventArgs e)
-        {
-            var gpioPinNumber = ((Windows.Devices.Gpio.GpioPin)sender).PinNumber;
-            _gpioEventsHappening[gpioPinNumber] = e.Edge == Windows.Devices.Gpio.GpioPinEdge.FallingEdge ? PinEventTypes.Rising : PinEventTypes.Falling;
         }
 
         /// <summary>
@@ -262,7 +310,26 @@ namespace System.Device.Gpio
         /// <param name="value">The value to be written to the pin.</param>
         public void Write(int pinNumber, PinValue value)
         {
-            _gpioPins[pinNumber].Write(value == PinValue.High ? Windows.Devices.Gpio.GpioPinValue.High : Windows.Devices.Gpio.GpioPinValue.Low);
+            NativeWrite(pinNumber, (byte)value);
         }
+
+        #region native calls
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern byte NativeRead(int pinNumber);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void NativeWrite(int pinNumber, byte value);
+
+        #endregion
+    }
+
+    internal class GpioPinBundle
+    {
+        public int PinNumber;
+        public GpioPin GpioPin;
+        public PinEventTypes GpioEvents;
+        public PinChangeEventHandler GpioPinChange;
+        public PinEventTypes GpioEventsHappening;
     }
 }

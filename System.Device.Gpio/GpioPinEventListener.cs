@@ -4,15 +4,14 @@
 //
 
 using nanoFramework.Runtime.Events;
-using System;
 using System.Collections;
 
-namespace Windows.Devices.Gpio
+namespace System.Device.Gpio
 {
     internal class GpioPinEventListener : IEventProcessor, IEventListener
     {
         // Map of pin numbers to GpioPin objects.
-        private ArrayList _pinMap = new ArrayList();
+        private static readonly ArrayList _pinMap = new ArrayList();
 
         public GpioPinEventListener()
         {
@@ -26,7 +25,7 @@ namespace Windows.Devices.Gpio
             {
                 // Data1 is packed by PostManagedEvent, so we need to unpack the high word.
                 PinNumber = (int)(data1 >> 16),
-                Edge = (data2 == 0) ? GpioPinEdge.FallingEdge : GpioPinEdge.RisingEdge,
+                EventType = (data2 == 0) ? PinEventTypes.Falling : PinEventTypes.Rising,
             };
         }
 
@@ -47,7 +46,7 @@ namespace Windows.Devices.Gpio
             // Avoid calling this under a lock to prevent a potential lock inversion.
             if (pin != null)
             {
-                pin.OnPinChangedInternal(pinEvent.Edge);
+                pin.OnPinChangedInternal(pinEvent.EventType);
             }
 
             return true;

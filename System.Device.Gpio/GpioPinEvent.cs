@@ -5,11 +5,11 @@
 
 using nanoFramework.Runtime.Events;
 
-namespace Windows.Devices.Gpio
+namespace System.Device.Gpio
 {
     internal class GpioPinEvent : BaseEvent
     {
         public int PinNumber;
-        public GpioPinEdge Edge;
+        public PinEventTypes EventType;
     }
 }

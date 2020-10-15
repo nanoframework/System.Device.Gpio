@@ -3,53 +3,41 @@
 // See LICENSE file in the project root for full license information.
 //
 
-using System;
 using System.Runtime.CompilerServices;
 
-namespace Windows.Devices.Gpio
+namespace System.Device.Gpio
 {
-    // This should be a TypedEventHandler "EventHandler<GpioPinValueChangedEventArgs>"
-    #pragma warning disable 1591
-    public delegate void GpioPinValueChangedEventHandler(
-        Object sender,
-        GpioPinValueChangedEventArgs e);
-
+    // This should be a TypedEventHandler "EventHandler<PinValueChangedEventArgs>"
+#pragma warning disable 1591
+    public delegate void PinValueChangedEventHandler(
+        object sender,
+        PinValueChangedEventArgs e);
 
     /// <summary>
     /// Represents a general-purpose I/O (GPIO) pin.
     /// </summary>
-    public sealed class Gpio​Pin : IGpioPin, IDisposable
+    public sealed class Gpio​Pin : IDisposable
     {
-        private static GpioPinEventListener s_eventListener;
+        private static readonly GpioPinEventListener s_gpioPinEventManager = new GpioPinEventListener();
 
         // this is used as the lock object 
         // a lock is required because multiple threads can access the GpioPin
-        private object _syncLock;
+        private readonly object _syncLock = new object();
 
         private readonly int _pinNumber;
-        private GpioPinDriveMode _driveMode = GpioPinDriveMode.Input;
+        private PinMode _driveMode = PinMode.Input;
         private TimeSpan _debounceTimeout = TimeSpan.Zero;
-        private GpioPinValueChangedEventHandler _callbacks = null;
-        private GpioPinValue _lastOutputValue = GpioPinValue.Low;
+        private PinValueChangedEventHandler _callbacks = null;
+        private PinValue _lastOutputValue = PinValue.Low;
 
         #pragma warning disable 0414
         // this field is used in native so it must be kept here despite "not being used"
-        private GpioPinValue _lastInputValue = GpioPinValue.Low;
+        private PinValue _lastInputValue = PinValue.Low;
         #pragma warning restore 0414
 
         internal Gpio​Pin(int pinNumber)
         {
             _pinNumber = pinNumber;
-
-            _syncLock = new object();
-
-            lock (_syncLock)
-            {
-                if (s_eventListener == null)
-                {
-                    s_eventListener = new GpioPinEventListener();
-                }
-            }
         }
 
         internal bool Init()
@@ -57,7 +45,7 @@ namespace Windows.Devices.Gpio
             if(NativeInit(_pinNumber))
             {
                 // add the pin to the event listener in order to receive the callbacks from the native interrupts
-                s_eventListener.AddPin(this);
+                s_gpioPinEventManager.AddPin(this);
 
                 return true;
             }
@@ -93,31 +81,11 @@ namespace Windows.Devices.Gpio
         /// <value>
         /// The pin number of the GPIO pin.
         /// </value>
-        public int PinNumber {
-            get
-            {
-                lock (_syncLock)
-                {
-                    // check if pin has been disposed
-                    if (!_disposedValue) { return _pinNumber; }
-
-                    throw new ObjectDisposedException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the sharing mode in which the general-purpose I/O (GPIO) pin is open.
-        /// </summary>
-        /// <value>
-        /// The sharing mode in which the GPIO pin is open.
-        /// </value>
-        public GpioSharingMode SharingMode
+        public int PinNumber 
         {
             get
             {
-                // at this time pins can't be shared, use is exclusive exclusive (pun intended!) 
-                return GpioSharingMode.Exclusive;
+                return _pinNumber;
             }
         }
 
@@ -126,7 +94,7 @@ namespace Windows.Devices.Gpio
         /// </summary>
         /// <returns>An enumeration value that indicates the current drive mode for the GPIO pin.
         /// The drive mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.</returns>
-        public GpioPinDriveMode GetDriveMode()
+        public PinMode GetDriveMode()
         {
             lock (_syncLock)
             {
@@ -142,11 +110,11 @@ namespace Windows.Devices.Gpio
         /// </summary>
         /// <param name="driveMode">The drive mode that you want to check for support.</param>
         /// <returns>
-        ///   True if the GPIO pin supports the drive mode that driveMode specifies; otherwise false. 
+        /// <see langword="true"/> if the GPIO pin supports the drive mode that driveMode specifies; otherwise false. 
         /// If you specify a drive mode for which this method returns false when you call <see cref="SetDriveMode"/>, <see cref="SetDriveMode"/> generates an exception.
         /// </returns>
         
-        public bool IsDriveModeSupported(GpioPinDriveMode driveMode)
+        public bool IsDriveModeSupported(PinMode driveMode)
         {
             lock (_syncLock)
             {
@@ -166,10 +134,10 @@ namespace Windows.Devices.Gpio
         /// <remarks>The following exceptions can be thrown by this method:
         /// <list type="bullet">
         /// <item><term>E_INVALIDARG : The GPIO pin does not support the specified drive mode.</term></item>
-        /// <item><term>E_ACCESSDENIED : The pin is open in shared read-only mode.Close the pin and reopen it in exclusive mode to change the drive mode of the pin.</term></item>
+        /// <item><term>E_ACCESSDENIED : The pin is open in shared read-only mode. Close the pin and reopen it in exclusive mode to change the drive mode of the pin.</term></item>
         /// </list>
         /// </remarks>
-        public void SetDriveMode(GpioPinDriveMode value)
+        public void SetDriveMode(PinMode value)
         {
             lock (_syncLock)
             {
@@ -191,7 +159,7 @@ namespace Windows.Devices.Gpio
         /// </summary>
         /// <returns>The current value of the GPIO pin. If the pin is configured as an output, this value is the last value written to the pin.</returns>
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern GpioPinValue Read();
+        public extern PinValue Read();
 
         /// <summary>
         /// Drives the specified value onto the general purpose I/O (GPIO) pin according to the current drive mode for the pin 
@@ -206,7 +174,7 @@ namespace Windows.Devices.Gpio
         /// <item><term>E_ACCESSDENIED : The GPIO pin is open in shared read-only mode. To write to the pin, close the pin and reopen the pin in exclusive mode.</term></item>
         /// </list>
         /// </remarks>
-        public void Write(GpioPinValue value)
+        public void Write(PinValue value)
         {
             lock (_syncLock)
             {
@@ -220,17 +188,17 @@ namespace Windows.Devices.Gpio
                     WriteNative(value);
 
                     // trigger the pin value changed event, if any is set
-                    GpioPinValueChangedEventHandler callbacks = _callbacks;
+                    PinValueChangedEventHandler callbacks = _callbacks;
 
-                    if (_lastOutputValue == GpioPinValue.Low)
+                    if (_lastOutputValue == PinValue.Low)
                     {
                         // last value is now LOW, so it was HIGH
-                        callbacks?.Invoke(this, new GpioPinValueChangedEventArgs(GpioPinEdge.FallingEdge));
+                        callbacks?.Invoke(this, new PinValueChangedEventArgs(PinEventTypes.Falling, _pinNumber));
                     }
                     else
                     {
                         // last value is now HIGH, so it was LOW
-                        callbacks?.Invoke(this, new GpioPinValueChangedEventArgs(GpioPinEdge.RisingEdge));
+                        callbacks?.Invoke(this, new PinValueChangedEventArgs(PinEventTypes.Rising, _pinNumber));
                     }
                 }
             }
@@ -239,7 +207,7 @@ namespace Windows.Devices.Gpio
         /// <summary>
         /// Occurs when the value of the general-purpose I/O (GPIO) pin changes, either because of an external stimulus when the pin is configured as an input, or when a value is written to the pin when the pin in configured as an output.
         /// </summary>
-        public event GpioPinValueChangedEventHandler ValueChanged
+        public event PinValueChangedEventHandler ValueChanged
         {
             add
             {
@@ -251,7 +219,7 @@ namespace Windows.Devices.Gpio
                     }
 
                     var callbacksOld = _callbacks;
-                    var callbacksNew = (GpioPinValueChangedEventHandler)Delegate.Combine(callbacksOld, value);
+                    var callbacksNew = (PinValueChangedEventHandler)Delegate.Combine(callbacksOld, value);
 
                     try
                     {
@@ -276,7 +244,7 @@ namespace Windows.Devices.Gpio
                     }
 
                     var callbacksOld = _callbacks;
-                    var callbacksNew = (GpioPinValueChangedEventHandler)Delegate.Remove(callbacksOld, value);
+                    var callbacksNew = (PinValueChangedEventHandler)Delegate.Remove(callbacksOld, value);
 
                     try
                     {
@@ -296,9 +264,9 @@ namespace Windows.Devices.Gpio
         /// Handles internal events and re-dispatches them to the publicly subscribed delegates.
         /// </summary>
         /// <param name="edge">The state transition for this event.</param>
-        internal void OnPinChangedInternal(GpioPinEdge edge)
+        internal void OnPinChangedInternal(PinEventTypes edge)
         {
-            GpioPinValueChangedEventHandler callbacks = null;
+            PinValueChangedEventHandler callbacks = null;
 
             lock (_syncLock)
             {
@@ -308,18 +276,16 @@ namespace Windows.Devices.Gpio
                 }
             }
 
-            callbacks?.Invoke(this, new GpioPinValueChangedEventArgs(edge));
+            callbacks?.Invoke(this, new PinValueChangedEventArgs(edge, _pinNumber));
         }
 
         /// <summary>
         /// Toggles the output of the general purpose I/O (GPIO) pin if the pin is configured as an output.
         /// </summary>
-        /// <remarks>
-        /// This method is exclusive of nanoFramework and it's not available in the UWP API.
-        /// </remarks>
         [MethodImpl(MethodImplOptions.InternalCall)]
+#pragma warning disable S4200 // OK to call native methods directly in nanoFramework
         public extern void Toggle();
-
+#pragma warning restore S4200 // Native methods should be wrapped
 
         #region IDisposable Support
 
@@ -331,8 +297,8 @@ namespace Windows.Devices.Gpio
             {
                 if (disposing)
                 {
-                    // remove the pin from the event listner
-                    s_eventListener.RemovePin(_pinNumber);
+                    // remove the pin from the event listener
+                    s_gpioPinEventManager.RemovePin(_pinNumber);
                 }
 
                 DisposeNative();
@@ -368,10 +334,10 @@ namespace Windows.Devices.Gpio
         #region external calls to native implementations
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern bool NativeIsDriveModeSupported(GpioPinDriveMode driveMode);
+        private extern bool NativeIsDriveModeSupported(PinMode driveMode);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void NativeSetDriveMode(GpioPinDriveMode driveMode);
+        private extern void NativeSetDriveMode(PinMode driveMode);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern bool NativeInit(int pinNumber);
@@ -380,7 +346,7 @@ namespace Windows.Devices.Gpio
         private extern void NativeSetDebounceTimeout();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void WriteNative(GpioPinValue value);
+        private extern void WriteNative(PinValue value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal extern void NativeSetAlternateFunction(int alternateFunction);
