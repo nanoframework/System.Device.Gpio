@@ -81,7 +81,7 @@ namespace System.Device.Gpio
         {
             var gpioPin = InternalOpenPin(pinNumber);
 
-            SetPinMode(pinNumber, mode);
+            gpioPin.SetPinMode(mode);
 
             // add to array
             s_GpioPins.Add(new GpioPinBundle() { PinNumber = pinNumber, GpioPin = gpioPin });

@@ -26,15 +26,15 @@ namespace System.Device.Gpio
 
         private readonly int _pinNumber;
 
-        private PinMode _pinMode = PinMode.Input;
+        private readonly PinMode _pinMode = PinMode.Input;
         private TimeSpan _debounceTimeout = TimeSpan.Zero;
         private PinValueChangedEventHandler _callbacks = null;
         private PinValue _lastOutputValue = PinValue.Low;
 
-        #pragma warning disable 0414
+#pragma warning disable 0414
         // this field is used in native so it must be kept here despite "not being used"
         private PinValue _lastInputValue = PinValue.Low;
-        #pragma warning restore 0414
+#pragma warning restore 0414
 
         internal Gpio​Pin(int pinNumber)
         {
@@ -43,7 +43,7 @@ namespace System.Device.Gpio
 
         internal bool Init()
         {
-            if(NativeInit(_pinNumber))
+            if (NativeInit(_pinNumber))
             {
                 // add the pin to the event listener in order to receive the callbacks from the native interrupts
                 s_gpioPinEventManager.AddPin(this);
@@ -82,7 +82,7 @@ namespace System.Device.Gpio
         /// <value>
         /// The pin number of the GPIO pin.
         /// </value>
-        public int PinNumber 
+        public int PinNumber
         {
             get
             {
@@ -112,9 +112,8 @@ namespace System.Device.Gpio
         /// <param name="pinMode">The pin mode that you want to check for support.</param>
         /// <returns>
         /// <see langword="true"/> if the GPIO pin supports the pin mode that pinMode specifies; otherwise false. 
-        /// If you specify a pin mode for which this method returns false when you call <see cref="SetPinMode"/>, <see cref="SetPinMode"/> generates an exception.
+        /// If you specify a pin mode for which this method returns <see langword="false"/> when you call <see cref="SetPinMode"/>, <see cref="SetPinMode"/> generates an exception.
         /// </returns>
-        
         public bool IsPinModeSupported(PinMode pinMode)
         {
             lock (_syncLock)
@@ -132,12 +131,7 @@ namespace System.Device.Gpio
         /// </summary>
         /// <param name="value">An enumeration value that specifies pin mode to use for the GPIO pin.
         /// The pin mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.</param>
-        /// <remarks>The following exceptions can be thrown by this method:
-        /// <list type="bullet">
-        /// <item><term>E_INVALIDARG : The GPIO pin does not support the specified pin mode.</term></item>
-        /// <item><term>E_ACCESSDENIED : The pin is open in shared read-only mode. Close the pin and reopen it in exclusive mode to change the pin mode of the pin.</term></item>
-        /// </list>
-        /// </remarks>
+        /// <exception cref="ArgumentException">The GPIO pin does not support the specified pin mode.</exception>
         public void SetPinMode(PinMode value)
         {
             lock (_syncLock)
@@ -145,14 +139,12 @@ namespace System.Device.Gpio
                 // check if pin has been disposed
                 if (_disposedValue) { throw new ObjectDisposedException(); }
 
-                // check if the request pin mode is supported
-                // need to call the native method directly because we are already inside a lock
-                if (NativeIsPinModeSupported(value))
-                {
-                    NativeSetPinMode(value);
-                    _pinMode = value;
-                }
-            }
+                // the native call takes care of:
+                // 1) validating if the requested pin mode is supported
+                // 2) throwing ArgumentException otherwise
+                // 3) store the requested pin mode in _pinMode field
+                NativeSetPinMode(value);
+            } 
         }
 
         /// <summary>
@@ -170,11 +162,7 @@ namespace System.Device.Gpio
         /// <para>If the GPIO pin is configured as an output, the method drives the specified value onto the pin according to the current pin mode for the pin.</para>
         /// <para>If the GPIO pin is configured as an input, the method updates the latched output value for the pin. The latched output value is driven onto the pin when the configuration for the pin changes to output.</para>
         /// </param>
-        /// <remarks>The following exceptions can be thrown by this method:
-        /// <list type="bullet">
-        /// <item><term>E_ACCESSDENIED : The GPIO pin is open in shared read-only mode. To write to the pin, close the pin and reopen the pin in exclusive mode.</term></item>
-        /// </list>
-        /// </remarks>
+        /// <exception cref="InvalidOperationException">This exception will be thrown on an attempt to write to a pin that hasn't been opened or is not configured as output.</exception>
         public void Write(PinValue value)
         {
             lock (_syncLock)
@@ -311,7 +299,7 @@ namespace System.Device.Gpio
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void DisposeNative();
 
-        #pragma warning disable 1591
+#pragma warning disable 1591
         ~Gpio​Pin()
         {
             Dispose(false);
