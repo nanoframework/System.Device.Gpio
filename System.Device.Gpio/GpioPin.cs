@@ -25,7 +25,8 @@ namespace System.Device.Gpio
         private readonly object _syncLock = new object();
 
         private readonly int _pinNumber;
-        private PinMode _driveMode = PinMode.Input;
+
+        private PinMode _pinMode = PinMode.Input;
         private TimeSpan _debounceTimeout = TimeSpan.Zero;
         private PinValueChangedEventHandler _callbacks = null;
         private PinValue _lastOutputValue = PinValue.Low;
@@ -90,66 +91,66 @@ namespace System.Device.Gpio
         }
 
         /// <summary>
-        /// Gets the current drive mode for the general-purpose I/O (GPIO) pin. The drive mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.
+        /// Gets the current pin mode for the general-purpose I/O (GPIO) pin. The pin mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.
         /// </summary>
-        /// <returns>An enumeration value that indicates the current drive mode for the GPIO pin.
-        /// The drive mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.</returns>
-        public PinMode GetDriveMode()
+        /// <returns>An enumeration value that indicates the current pin mode for the GPIO pin.
+        /// The pin mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.</returns>
+        public PinMode GetPinMode()
         {
             lock (_syncLock)
             {
                 // check if pin has been disposed
-                if (!_disposedValue) { return _driveMode; }
+                if (!_disposedValue) { return _pinMode; }
 
                 throw new ObjectDisposedException();
             }
         }
 
         /// <summary>
-        /// Gets whether the general-purpose I/O (GPIO) pin supports the specified drive mode.
+        /// Gets whether the general-purpose I/O (GPIO) pin supports the specified pin mode.
         /// </summary>
-        /// <param name="driveMode">The drive mode that you want to check for support.</param>
+        /// <param name="pinMode">The pin mode that you want to check for support.</param>
         /// <returns>
-        /// <see langword="true"/> if the GPIO pin supports the drive mode that driveMode specifies; otherwise false. 
-        /// If you specify a drive mode for which this method returns false when you call <see cref="SetDriveMode"/>, <see cref="SetDriveMode"/> generates an exception.
+        /// <see langword="true"/> if the GPIO pin supports the pin mode that pinMode specifies; otherwise false. 
+        /// If you specify a pin mode for which this method returns false when you call <see cref="SetPinMode"/>, <see cref="SetPinMode"/> generates an exception.
         /// </returns>
         
-        public bool IsDriveModeSupported(PinMode driveMode)
+        public bool IsPinModeSupported(PinMode pinMode)
         {
             lock (_syncLock)
             {
                 // check if pin has been disposed
-                if (!_disposedValue) { return NativeIsDriveModeSupported(driveMode); }
+                if (!_disposedValue) { return NativeIsPinModeSupported(pinMode); }
 
                 throw new ObjectDisposedException();
             }
         }
 
         /// <summary>
-        /// Sets the drive mode of the general-purpose I/O (GPIO) pin. 
-        /// The drive mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.
+        /// Sets the pin mode of the general-purpose I/O (GPIO) pin. 
+        /// The pin mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.
         /// </summary>
-        /// <param name="value">An enumeration value that specifies drive mode to use for the GPIO pin.
-        /// The drive mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.</param>
+        /// <param name="value">An enumeration value that specifies pin mode to use for the GPIO pin.
+        /// The pin mode specifies whether the pin is configured as an input or an output, and determines how values are driven onto the pin.</param>
         /// <remarks>The following exceptions can be thrown by this method:
         /// <list type="bullet">
-        /// <item><term>E_INVALIDARG : The GPIO pin does not support the specified drive mode.</term></item>
-        /// <item><term>E_ACCESSDENIED : The pin is open in shared read-only mode. Close the pin and reopen it in exclusive mode to change the drive mode of the pin.</term></item>
+        /// <item><term>E_INVALIDARG : The GPIO pin does not support the specified pin mode.</term></item>
+        /// <item><term>E_ACCESSDENIED : The pin is open in shared read-only mode. Close the pin and reopen it in exclusive mode to change the pin mode of the pin.</term></item>
         /// </list>
         /// </remarks>
-        public void SetDriveMode(PinMode value)
+        public void SetPinMode(PinMode value)
         {
             lock (_syncLock)
             {
                 // check if pin has been disposed
                 if (_disposedValue) { throw new ObjectDisposedException(); }
 
-                // check if the request drive mode is supported
+                // check if the request pin mode is supported
                 // need to call the native method directly because we are already inside a lock
-                if (NativeIsDriveModeSupported(value))
+                if (NativeIsPinModeSupported(value))
                 {
-                    NativeSetDriveMode(value);
-                    _driveMode = value;
+                    NativeSetPinMode(value);
+                    _pinMode = value;
                 }
             }
         }
@@ -162,11 +163,11 @@ namespace System.Device.Gpio
         public extern PinValue Read();
 
         /// <summary>
-        /// Drives the specified value onto the general purpose I/O (GPIO) pin according to the current drive mode for the pin 
+        /// Drives the specified value onto the general purpose I/O (GPIO) pin according to the current pin mode for the pin 
         /// if the pin is configured as an output, or updates the latched output value for the pin if the pin is configured as an input.
         /// </summary>
         /// <param name="value">The enumeration value to write to the GPIO pin.
-        /// <para>If the GPIO pin is configured as an output, the method drives the specified value onto the pin according to the current drive mode for the pin.</para>
+        /// <para>If the GPIO pin is configured as an output, the method drives the specified value onto the pin according to the current pin mode for the pin.</para>
         /// <para>If the GPIO pin is configured as an input, the method updates the latched output value for the pin. The latched output value is driven onto the pin when the configuration for the pin changes to output.</para>
         /// </param>
         /// <remarks>The following exceptions can be thrown by this method:
@@ -224,7 +225,7 @@ namespace System.Device.Gpio
                     try
                     {
                         _callbacks = callbacksNew;
-                        NativeSetDriveMode(_driveMode);
+                        NativeSetPinMode(_pinMode);
                     }
                     catch
                     {
@@ -249,7 +250,7 @@ namespace System.Device.Gpio
                     try
                     {
                         _callbacks = callbacksNew;
-                        NativeSetDriveMode(_driveMode);
+                        NativeSetPinMode(_pinMode);
                     }
                     catch
                     {
@@ -334,10 +335,10 @@ namespace System.Device.Gpio
         #region external calls to native implementations
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern bool NativeIsDriveModeSupported(PinMode driveMode);
+        private extern bool NativeIsPinModeSupported(PinMode pinMode);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void NativeSetDriveMode(PinMode driveMode);
+        private extern void NativeSetPinMode(PinMode pinMode);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern bool NativeInit(int pinNumber);

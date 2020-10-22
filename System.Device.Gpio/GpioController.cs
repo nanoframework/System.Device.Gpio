@@ -179,7 +179,7 @@ namespace System.Device.Gpio
             {
                 if (((GpioPinBundle)s_GpioPins[i]).PinNumber == pinNumber)
                 {
-                    return ((GpioPinBundle)s_GpioPins[i]).GpioPin.GetDriveMode();
+                    return ((GpioPinBundle)s_GpioPins[i]).GpioPin.GetPinMode();
                 }
             }
 
