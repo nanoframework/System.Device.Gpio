@@ -2,7 +2,16 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.8...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.11...HEAD)
+
+**Implemented enhancements:**
+
+- Improve GpioControllerValueChanged [\#9](https://github.com/nanoframework/lib-System.Device.Gpio/pull/9)
+- Remove \_lastOutputValue field from GpioPin [\#8](https://github.com/nanoframework/lib-System.Device.Gpio/pull/8)
+
+## [v1.0.0-preview.11](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.11) (2020-10-22)
+
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.8...v1.0.0-preview.11)
 
 **Implemented enhancements:**
 
