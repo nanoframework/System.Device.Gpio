@@ -2,7 +2,19 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.6...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.8...HEAD)
+
+**Implemented enhancements:**
+
+- Improvements in GpioPin [\#7](https://github.com/nanoframework/lib-System.Device.Gpio/pull/7)
+
+**Documentation and other chores:**
+
+- Rename DriveMode with PinMode. [\#6](https://github.com/nanoframework/lib-System.Device.Gpio/pull/6)
+
+## [v1.0.0-preview.8](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.8) (2020-10-21)
+
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.6...v1.0.0-preview.8)
 
 **Documentation and other chores:**
 
