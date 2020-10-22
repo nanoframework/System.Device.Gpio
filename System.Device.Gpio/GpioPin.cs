@@ -29,7 +29,6 @@ namespace System.Device.Gpio
         private readonly PinMode _pinMode = PinMode.Input;
         private TimeSpan _debounceTimeout = TimeSpan.Zero;
         private PinValueChangedEventHandler _callbacks = null;
-        private PinValue _lastOutputValue = PinValue.Low;
 
 #pragma warning disable 0414
         // this field is used in native so it must be kept here despite "not being used"
@@ -170,26 +169,11 @@ namespace System.Device.Gpio
                 // check if pin has been disposed
                 if (_disposedValue) { throw new ObjectDisposedException(); }
 
-                if (_lastOutputValue != value)
-                {
-                    // value has changed
-                    // native write
-                    WriteNative(value);
-
-                    // trigger the pin value changed event, if any is set
-                    PinValueChangedEventHandler callbacks = _callbacks;
-
-                    if (_lastOutputValue == PinValue.Low)
-                    {
-                        // last value is now LOW, so it was HIGH
-                        callbacks?.Invoke(this, new PinValueChangedEventArgs(PinEventTypes.Falling, _pinNumber));
-                    }
-                    else
-                    {
-                        // last value is now HIGH, so it was LOW
-                        callbacks?.Invoke(this, new PinValueChangedEventArgs(PinEventTypes.Rising, _pinNumber));
-                    }
-                }
+                // the native call takes care of:
+                // 1) validating if the requested pin mode is supported
+                // 2) throwing ArgumentException otherwise
+                // 3) firing the event for pin value changed if there are any registered callbacks
+                WriteNative(value);
             }
         }
 
