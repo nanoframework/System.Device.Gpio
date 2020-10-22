@@ -269,16 +269,16 @@ namespace System.Device.Gpio
             // sanity check
             if(gpioPin != null)
             {
-                if (((gpioPin.GpioEvents & PinEventTypes.Falling) == PinEventTypes.Falling)
-                    && ((e.ChangeType & PinEventTypes.Falling) == PinEventTypes.Falling))
+                if (gpioPin.GpioEvents.HasFlag(PinEventTypes.Falling)
+                    && e.ChangeType.HasFlag(PinEventTypes.Falling))
                 {
                     gpioPin.GpioPinChange.Invoke(
                         this,
                         new PinValueChangedEventArgs(PinEventTypes.Falling, gpioPin.PinNumber));
                 }
 
-                if (((gpioPin.GpioEvents & PinEventTypes.Rising) == PinEventTypes.Rising)
-                    && ((e.ChangeType & PinEventTypes.Rising) == PinEventTypes.Rising))
+                if (gpioPin.GpioEvents.HasFlag(PinEventTypes.Rising)
+                    && e.ChangeType.HasFlag(PinEventTypes.Rising))
                 {
                     gpioPin.GpioPinChange.Invoke(
                         this,
