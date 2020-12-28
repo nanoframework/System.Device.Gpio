@@ -2,7 +2,24 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.14...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.19...HEAD)
+
+**Documentation and other chores:**
+
+- Update 2 NuGet dependencies [\#14](https://github.com/nanoframework/lib-System.Device.Gpio/pull/14)
+- Bumps nanoFramework.Runtime.Events from 1.8.2-preview.13 to 1.9.0-preview.2 [\#12](https://github.com/nanoframework/lib-System.Device.Gpio/pull/12)
+
+## [v1.0.0-preview.19](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.19) (2020-12-07)
+
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.17...v1.0.0-preview.19)
+
+**Documentation and other chores:**
+
+- Bumps nanoFramework.Runtime.Events from 1.8.2-preview.13 to 1.9.0-preview.2 [\#13](https://github.com/nanoframework/lib-System.Device.Gpio/pull/13)
+
+## [v1.0.0-preview.17](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.17) (2020-12-07)
+
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.14...v1.0.0-preview.17)
 
 **Documentation and other chores:**
 
