@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.19...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.21...HEAD)
+
+**Documentation and other chores:**
+
+- Update 2 NuGet dependencies [\#15](https://github.com/nanoframework/lib-System.Device.Gpio/pull/15)
+
+## [v1.0.0-preview.21](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.21) (2020-12-28)
+
+[Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.19...v1.0.0-preview.21)
 
 **Documentation and other chores:**
 
@@ -12,10 +20,6 @@
 ## [v1.0.0-preview.19](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.19) (2020-12-07)
 
 [Full Changelog](https://github.com/nanoframework/lib-System.Device.Gpio/compare/v1.0.0-preview.17...v1.0.0-preview.19)
-
-**Documentation and other chores:**
-
-- Bumps nanoFramework.Runtime.Events from 1.8.2-preview.13 to 1.9.0-preview.2 [\#13](https://github.com/nanoframework/lib-System.Device.Gpio/pull/13)
 
 ## [v1.0.0-preview.17](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.17) (2020-12-07)
 
@@ -44,6 +48,7 @@
 
 **Documentation and other chores:**
 
+- Bumps nanoFramework.Runtime.Events from 1.8.2-preview.13 to 1.9.0-preview.2 [\#13](https://github.com/nanoframework/lib-System.Device.Gpio/pull/13)
 - Rename DriveMode with PinMode. [\#6](https://github.com/nanoframework/lib-System.Device.Gpio/pull/6)
 
 ## [v1.0.0-preview.8](https://github.com/nanoframework/lib-System.Device.Gpio/tree/v1.0.0-preview.8) (2020-10-21)
