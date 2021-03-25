@@ -1,6 +1,6 @@
 trigger:
   branches:
-    include: [master, develop, "release-*" ]
+    include: [main, develop, "release-*" ]
   paths:
     exclude: ["*.md", .gitignore]
   tags:
@@ -27,7 +27,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   nugetPackageName: 'nanoFramework.System.Device.Gpio'
-  repoName: 'lib-System.Device.Gpio'
+  repoName: 'System.Device.Gpio'
 
 steps:
 
