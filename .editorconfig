@@ -1,6 +1,0 @@
-﻿[*.cs]
-
-
-# S4200: Native methods should be wrapped
-# OK to call directly native methods in nanoFramework
-dotnet_diagnostic.S4200.severity = none

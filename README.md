@@ -1,6 +1,6 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nanoframework_lib-System.Device.Gpio&metric=alert_status)](https://sonarcloud.io/dashboard?id=nanoframework_lib-System.Device.Gpio) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=nanoframework_lib-System.Device.Gpio&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=nanoframework_lib-System.Device.Gpio) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![NuGet](https://img.shields.io/nuget/dt/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) [![#yourfirstpr](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/nanoframework/Home/blob/master/CONTRIBUTING.md) [![Discord](https://img.shields.io/discord/478725473862549535.svg?logo=discord&logoColor=white&label=Discord&color=7289DA)](https://discord.gg/gCyBu8T)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nanoframework_lib-System.Device.Gpio&metric=alert_status)](https://sonarcloud.io/dashboard?id=nanoframework_lib-System.Device.Gpio) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=nanoframework_lib-System.Device.Gpio&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=nanoframework_lib-System.Device.Gpio) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![NuGet](https://img.shields.io/nuget/dt/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) [![#yourfirstpr](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/nanoframework/Home/blob/main/CONTRIBUTING.md) [![Discord](https://img.shields.io/discord/478725473862549535.svg?logo=discord&logoColor=white&label=Discord&color=7289DA)](https://discord.gg/gCyBu8T)
 
-![nanoFramework logo](https://github.com/nanoframework/Home/blob/master/resources/logo/nanoFramework-repo-logo.png)
+![nanoFramework logo](https://github.com/nanoframework/Home/blob/main/resources/logo/nanoFramework-repo-logo.png)
 
 -----
 
@@ -10,8 +10,8 @@
 
 | Component | Build Status | NuGet Package |
 |:-|---|---|
-| System.Device.Gpio | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=master) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
-| System.Device.Gpio (preview) | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=develop) | [![](https://badgen.net/badge/NuGet/preview/D7B023?icon=https://simpleicons.now.sh/azuredevops/fff)](https://dev.azure.com/nanoframework/feed/_packaging?_a=package&feed=sandbox&package=nanoFramework.System.Device.Gpio&protocolType=NuGet&view=overview) |
+| System.Device.Gpio | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
+| System.Device.Gpio (preview) | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=develop) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
 
 ## Feedback and documentation
 
@@ -21,7 +21,7 @@ Join our Discord community [here](https://discord.gg/gCyBu8T).
 
 ## Credits
 
-The list of contributors to this project can be found at [CONTRIBUTORS](https://github.com/nanoframework/Home/blob/master/CONTRIBUTORS.md).
+The list of contributors to this project can be found at [CONTRIBUTORS](https://github.com/nanoframework/Home/blob/main/CONTRIBUTORS.md).
 
 ## License
 

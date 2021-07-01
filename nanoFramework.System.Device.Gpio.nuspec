@@ -5,19 +5,17 @@
     <version>$version$</version>
     <title>nanoFramework.System.Device.Gpio</title>
     <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors</owners>
+    <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
+    <license type="file">LICENSE.md</license>
     <releaseNotes>
     </releaseNotes>
     <developmentDependency>false</developmentDependency>
-    <projectUrl>https://github.com/nanoframework/lib-System.Device.Gpio</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
-    <repository type="git" url="https://github.com/nanoframework/lib-System.Device.Gpio" commit="$commit$" />
+    <projectUrl>https://github.com/nanoframework/System.Device.Gpio</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/System.Device.Gpio" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the System.Device.Gpio assembly for nanoFramework C# projects.
-This package requires a target with System.Device.Gpio v$nativeVersion$ (checksum $checksum$).</description>
-    <summary>System.Device.Gpio assembly for nanoFramework C# projects</summary>
+    <description>This package includes the System.Device.Gpio assembly for .NET nanoFramework C# projects.&#10;This package requires a target with System.Device.Gpio v$nativeVersion$ (checksum $checksum$).</description>
     <tags>nanoFramework C# csharp netmf netnf System.Device.Gpio</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
@@ -30,7 +28,9 @@ This package requires a target with System.Device.Gpio v$nativeVersion$ (checksu
     <file src="System.Device.Gpio\bin\Release\System.Device.Gpio.pdbx" target="lib\System.Device.Gpio.pdbx" />
     <file src="System.Device.Gpio\bin\Release\System.Device.Gpio.pe" target="lib\System.Device.Gpio.pe" />
     <file src="System.Device.Gpio\bin\Release\System.Device.Gpio.xml" target="lib\System.Device.Gpio.xml" />
-    <!-- readme -->
-    <file src="readme.txt" target="readme.txt" />
+   
+   <file src="assets\readme.txt" target="" />
+    <file src="assets\nf-logo.png" target="images" />
+    <file src="LICENSE.md" target="" />
   </files>
 </package>

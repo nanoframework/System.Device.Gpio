@@ -5,13 +5,13 @@
     <version>$version$</version>
     <title>System.Device.Gpio.DELIVERABLES</title>
     <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors</owners>
+    <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>
     </releaseNotes>
     <developmentDependency>false</developmentDependency>
-    <projectUrl>https://github.com/nanoframework/lib-System.Device.Gpio</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
+    <projectUrl>https://github.com/nanoframework/System.Device.Gpio</projectUrl>
+    <icon>images\nf-logo.png</icon>
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>** DON'T REFERENCE THIS PACKAGE ** Not meant for development. This package includes the deliverable artifacts of the System.Device.Gpio assembly for nanoFramework. These are for testing purposes and for updating the native code base of the library.</description>
     <summary>System.Device.Gpio.DELIVERABLES is not meant for development.</summary>
