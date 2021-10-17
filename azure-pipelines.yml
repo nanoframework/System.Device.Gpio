@@ -23,7 +23,7 @@ pool:
 
 variables:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  solution: '**/*.sln'
+  solution: 'nanoFramework.System.Device.Gpio.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   nugetPackageName: 'nanoFramework.System.Device.Gpio'
