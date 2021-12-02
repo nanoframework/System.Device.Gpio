@@ -5,11 +5,12 @@
     <version>$version$</version>
     <title>nanoFramework.System.Device.Gpio</title>
     <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors,dotnetfoundation</owners>
+    <owners>nanoFramework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
     </releaseNotes>
+    <readme>docs\README.md</readme>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/System.Device.Gpio</projectUrl>
     <icon>images\nf-logo.png</icon>
@@ -19,8 +20,8 @@
 This package requires a target with System.Device.Gpio v$nativeVersion$ (checksum $checksum$).</description>
     <tags>nanoFramework C# csharp netmf netnf System.Device.Gpio</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
     </dependencies>
   </metadata>
   <files>
@@ -30,6 +31,7 @@ This package requires a target with System.Device.Gpio v$nativeVersion$ (checksu
     <file src="System.Device.Gpio\bin\Release\System.Device.Gpio.pe" target="lib\System.Device.Gpio.pe" />
     <file src="System.Device.Gpio\bin\Release\System.Device.Gpio.xml" target="lib\System.Device.Gpio.xml" />
     <file src="assets\readme.txt" target="" />
+    <file src="README.md" target="docs\" />
     <file src="assets\nf-logo.png" target="images" />
     <file src="LICENSE.md" target="" />
   </files>
