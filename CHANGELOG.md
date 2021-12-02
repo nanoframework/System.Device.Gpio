@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.2-preview.10...HEAD)
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.2-preview.12...HEAD)
+
+**Documentation and other chores:**
+
+- Bumps nanoFramework.Runtime.Events from 1.9.2-preview.14 to 1.9.2 [\#40](https://github.com/nanoframework/System.Device.Gpio/pull/40)
+
+## [v1.0.2-preview.12](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.2-preview.12) (2021-12-02)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.2-preview.10...v1.0.2-preview.12)
 
 **Documentation and other chores:**
 
