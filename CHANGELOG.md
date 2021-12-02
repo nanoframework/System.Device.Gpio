@@ -1,7 +1,5 @@
 # Changelog
 
-## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
-
 [Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.2-preview.12...HEAD)
 
 **Documentation and other chores:**
