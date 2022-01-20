@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GpioDriver.cs" />
     <Compile Include="GpioPin.cs" />
     <Compile Include="GpioPinEvent.cs" />
     <Compile Include="GpioPinEventListener.cs" />

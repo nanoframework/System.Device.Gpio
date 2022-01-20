@@ -1,8 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Threading;
-using System.Threading.Tasks;
+using System;
+
 
 namespace System.Device.Gpio
 {
@@ -80,18 +80,6 @@ namespace System.Device.Gpio
         /// <param name="cancellationToken">The cancellation token of when the operation should stop waiting for an event.</param>
         /// <returns>A structure that contains the result of the waiting operation.</returns>
         protected internal abstract WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Async call until an event of type eventType is received or a cancellation is requested.
-        /// </summary>
-        /// <param name="pinNumber">The pin number in the driver's logical numbering scheme.</param>
-        /// <param name="eventTypes">The event types to wait for.</param>
-        /// <param name="cancellationToken">The cancellation token of when the operation should stop waiting for an event.</param>
-        /// <returns>A task representing the operation of getting the structure that contains the result of the waiting operation</returns>
-        protected internal virtual ValueTask<WaitForEventResult> WaitForEventAsync(int pinNumber, PinEventTypes eventTypes, CancellationToken cancellationToken)
-        {
-            return new ValueTask<WaitForEventResult>(Task.Run(() => WaitForEvent(pinNumber, eventTypes, cancellationToken)));
-        }
 
         /// <summary>
         /// Adds a handler for a pin value changed event.
