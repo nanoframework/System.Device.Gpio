@@ -34,15 +34,6 @@
     <Name>System.Device.Gpio</Name>
   </PropertyGroup>
   <ItemGroup>
-    <NFMDP_PE_ExcludeClassByName Include="GpioOpenStatus">
-      <InProject>false</InProject>
-    </NFMDP_PE_ExcludeClassByName>
-    <NFMDP_PE_ExcludeClassByName Include="GpioPinEdge">
-      <InProject>false</InProject>
-    </NFMDP_PE_ExcludeClassByName>
-    <NFMDP_PE_ExcludeClassByName Include="GpioSharingMode">
-      <InProject>false</InProject>
-    </NFMDP_PE_ExcludeClassByName>
     <NFMDP_PE_ExcludeClassByName Include="GpioPinEvent">
       <InProject>false</InProject>
     </NFMDP_PE_ExcludeClassByName>
@@ -58,9 +49,6 @@
     <NFMDP_PE_ExcludeClassByName Include="PinNumberingScheme">
       <InProject>false</InProject>
     </NFMDP_PE_ExcludeClassByName>
-    <NFMDP_PE_ExcludeClassByName Include="PinValuePair">
-      <InProject>false</InProject>
-    </NFMDP_PE_ExcludeClassByName>
     <NFMDP_PE_ExcludeClassByName Include="WaitEventResult">
       <InProject>false</InProject>
     </NFMDP_PE_ExcludeClassByName>
@@ -73,13 +61,13 @@
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.12.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0-preview.9\lib\mscorlib.dll</HintPath>
+
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.10.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
