@@ -1,8 +1,8 @@
 # Changelog
 
-## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
+## [v1.0.3-preview.10](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.3-preview.10) (2022-02-17)
 
-[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.8...HEAD)
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.8...v1.0.3-preview.10)
 
 **Documentation and other chores:**
 
