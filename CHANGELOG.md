@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.18...HEAD)
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.20...HEAD)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#51](https://github.com/nanoframework/System.Device.Gpio/pull/51)
+
+## [v1.0.3-preview.20](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.3-preview.20) (2022-03-28)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.18...v1.0.3-preview.20)
 
 **Documentation and other chores:**
 
