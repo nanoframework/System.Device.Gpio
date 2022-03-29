@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.4](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.4) (2022-03-29)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.22...v1.0.4)
+
 ## [v1.0.3-preview.22](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.3-preview.22) (2022-03-28)
 
 [Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.20...v1.0.3-preview.22)
