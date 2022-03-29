@@ -4,8 +4,7 @@
     <id>nanoFramework.System.Device.Gpio.DELIVERABLES</id>
     <version>$version$</version>
     <title>System.Device.Gpio.DELIVERABLES</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>
     </releaseNotes>
@@ -19,7 +18,7 @@
     </tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.1" />
     </dependencies>
   </metadata>
   <files>
