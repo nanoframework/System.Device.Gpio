@@ -10,8 +10,7 @@
 
 | Component | Build Status | NuGet Package |
 |:-|---|---|
-| System.Device.Gpio | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
-| System.Device.Gpio (preview) | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/nanoframework.lib-System.Device.Gpio?branchName=develop)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&branchName=develop) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
+| System.Device.Gpio | [![Build Status](https://dev.azure.com/nanoframework/System.Device.Gpio/_apis/build/status/System.Device.Gpio?repoName=nanoframework%2FSystem.Device.Gpio&branchName=main)](https://dev.azure.com/nanoframework/System.Device.Gpio/_build/latest?definitionId=63&repoName=nanoframework%2FSystem.Device.Gpio&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.System.Device.Gpio.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.System.Device.Gpio/) |
 
 ## Feedback and documentation
 
