@@ -143,7 +143,7 @@ namespace System.Device.Gpio
                 // 2) throwing ArgumentException otherwise
                 // 3) store the requested pin mode in _pinMode field
                 NativeSetPinMode(value);
-            } 
+            }
         }
 
         /// <summary>

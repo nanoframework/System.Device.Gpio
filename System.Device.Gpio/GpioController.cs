@@ -267,7 +267,7 @@ namespace System.Device.Gpio
             }
 
             // sanity check
-            if(gpioPin != null)
+            if (gpioPin != null)
             {
                 if (gpioPin.GpioEvents.HasFlag(PinEventTypes.Falling)
                     && e.ChangeType.HasFlag(PinEventTypes.Falling))
@@ -292,7 +292,7 @@ namespace System.Device.Gpio
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme</param>
         /// <param name="mode">The mode to be set.</param>
-        [MethodImpl(MethodImplOptions.InternalCall)] 
+        [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetPinMode(
             int pinNumber,
             PinMode mode);
