@@ -121,6 +121,9 @@ namespace System.Device.Gpio
                 {
                     ((GpioPinBundle)s_GpioPins[i]).GpioPin.Dispose();
 
+                    // remove from array
+                    s_GpioPins.RemoveAt(i);
+
                     // done here
                     return;
                 }
