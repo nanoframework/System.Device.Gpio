@@ -1,8 +1,20 @@
 # Changelog
 
+## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.4...HEAD)
+
+**Fixed bugs:**
+
+- Fix ClosePin\(\) [\#53](https://github.com/nanoframework/System.Device.Gpio/pull/53)
+
 ## [v1.0.4](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.4) (2022-03-29)
 
 [Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.3-preview.22...v1.0.4)
+
+**Documentation and other chores:**
+
+- release-v1.0.4 [\#52](https://github.com/nanoframework/System.Device.Gpio/pull/52)
 
 ## [v1.0.3-preview.22](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.3-preview.22) (2022-03-28)
 
@@ -76,6 +88,10 @@
 
 [Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.2-preview.14...v1.0.2)
 
+**Documentation and other chores:**
+
+- release-v1.0.2 [\#41](https://github.com/nanoframework/System.Device.Gpio/pull/41)
+
 ## [v1.0.2-preview.14](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.2-preview.14) (2021-12-02)
 
 [Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.2-preview.12...v1.0.2-preview.14)
@@ -119,6 +135,10 @@
 ## [v1.0.1](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.1) (2021-07-15)
 
 [Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.0-preview.52...v1.0.1)
+
+**Documentation and other chores:**
+
+- release-v1.0.1 [\#34](https://github.com/nanoframework/System.Device.Gpio/pull/34)
 
 ## [v1.0.0-preview.52](https://github.com/nanoframework/System.Device.Gpio/tree/v1.0.0-preview.52) (2021-07-15)
 
