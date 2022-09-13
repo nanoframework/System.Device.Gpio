@@ -11,7 +11,7 @@ namespace System.Device.Gpio
     internal class GpioPinEventListener : IEventProcessor, IEventListener
     {
         // Map of pin numbers to GpioPin objects.
-        private static readonly ArrayList _pinMap = new ArrayList();
+        private readonly ArrayList _pinMap = new ArrayList();
 
         public GpioPinEventListener()
         {
