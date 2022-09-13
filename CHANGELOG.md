@@ -2,7 +2,19 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.4...HEAD)
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.5...HEAD)
+
+**Implemented enhancements:**
+
+- Remove unnecessary dispose checks [\#54](https://github.com/nanoframework/System.Device.Gpio/pull/54)
+
+**Fixed bugs:**
+
+- Fix issue with cross thread access to GpioPin [\#55](https://github.com/nanoframework/System.Device.Gpio/pull/55)
+
+## [v1.1.5](https://github.com/nanoframework/System.Device.Gpio/tree/v1.1.5) (2022-09-07)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.0.4...v1.1.5)
 
 **Fixed bugs:**
 
