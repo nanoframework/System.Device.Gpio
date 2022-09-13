@@ -135,9 +135,6 @@ namespace System.Device.Gpio
         {
             lock (_syncLock)
             {
-                // check if pin has been disposed
-                if (_disposedValue) { throw new ObjectDisposedException(); }
-
                 // the native call takes care of:
                 // 1) validating if the requested pin mode is supported
                 // 2) throwing ArgumentException otherwise
@@ -166,9 +163,6 @@ namespace System.Device.Gpio
         {
             lock (_syncLock)
             {
-                // check if pin has been disposed
-                if (_disposedValue) { throw new ObjectDisposedException(); }
-
                 // the native call takes care of:
                 // 1) validating if the requested pin mode is supported
                 // 2) throwing ArgumentException otherwise
