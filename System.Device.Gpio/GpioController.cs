@@ -19,6 +19,7 @@ namespace System.Device.Gpio
         static readonly object _syncLock = new object();
 
         private bool _disposedValue;
+        private PinNumberingScheme _numberingScheme;
 
         /// <summary>
         /// Initializes a new instance of the System.Device.Gpio.GpioController class that
@@ -42,7 +43,7 @@ namespace System.Device.Gpio
         /// <summary>
         /// The numbering scheme used to represent pins provided by the controller.
         /// </summary>
-        public PinNumberingScheme NumberingScheme { get; internal set; }
+        public PinNumberingScheme NumberingScheme { get => _numberingScheme; internal set => _numberingScheme = value; }
 
         /// <summary>
         /// The number of pins provided by the controller.
