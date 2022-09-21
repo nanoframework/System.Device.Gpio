@@ -38,7 +38,7 @@ namespace System.Device.Gpio
             var pinEvent = (GpioPinEvent)ev;
             GpioPin pin = null;
 
-            lock (_pinMap)
+            lock (_pinMap.SyncRoot)
             {
                 pin = FindGpioPin(pinEvent.PinNumber);
             }
@@ -54,7 +54,7 @@ namespace System.Device.Gpio
 
         public void AddPin(GpioPin pin)
         {
-            lock (_pinMap)
+            lock (_pinMap.SyncRoot)
             {
                 _pinMap.Add(pin);
             }
@@ -62,7 +62,7 @@ namespace System.Device.Gpio
 
         public void RemovePin(int pinNumber)
         {
-            lock (_pinMap)
+            lock (_pinMap.SyncRoot)
             {
                 var pin = FindGpioPin(pinNumber);
 
