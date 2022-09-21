@@ -16,7 +16,7 @@ namespace System.Device.Gpio
 
         // this is used as the lock object 
         // a lock is required because multiple threads can access the GPIO controller
-        static readonly object _syncLock = new object();
+        private static readonly object _syncLock = new object();
 
         private bool _disposedValue;
         private PinNumberingScheme _numberingScheme;
