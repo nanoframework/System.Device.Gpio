@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.5...HEAD)
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.11...HEAD)
+
+**Implemented enhancements:**
+
+- Lock on pin map array in event listener is now using array SyncRoot [\#56](https://github.com/nanoframework/System.Device.Gpio/pull/56)
+
+## [v1.1.11](https://github.com/nanoframework/System.Device.Gpio/tree/v1.1.11) (2022-09-13)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.5...v1.1.11)
 
 **Implemented enhancements:**
 
