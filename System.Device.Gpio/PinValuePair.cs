@@ -9,15 +9,17 @@ namespace System.Device.Gpio
     /// </summary>
     public readonly struct PinValuePair
     {
+        private readonly int _pinNumber;
+        private readonly PinValue _pinValue;
+
         /// <summary>
         /// The pin number.
         /// </summary>
-        public int PinNumber { get; }
-
+        public int PinNumber => _pinNumber;
         /// <summary>
         /// The pin value.
         /// </summary>
-        public PinValue PinValue { get; }
+        public PinValue PinValue => _pinValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PinValuePair"/> struct.
@@ -26,8 +28,8 @@ namespace System.Device.Gpio
         /// <param name="pinValue">The pin value.</param>
         public PinValuePair(int pinNumber, PinValue pinValue)
         {
-            PinNumber = pinNumber;
-            PinValue = pinValue;
+            _pinNumber = pinNumber;
+            _pinValue = pinValue;
         }
 
         /// <summary>
