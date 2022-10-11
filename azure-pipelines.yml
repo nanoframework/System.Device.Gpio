@@ -89,20 +89,16 @@ jobs:
   variables:
     DOTNET_NOLOGO: true
 
+
   steps:
-  # need this here in order to persist GitHub credentials 
-  - checkout: self
-    fetchDepth: 1
 
-  - template: azure-pipelines-templates/install-nuget.yml@templates  
+  - checkout: none
 
-  # update dependencies
-  - task: UpdatenFDependencies@1
-    inputs:
-      gitHubToken: $(GitHubToken)
+  # update dependents
+  - template: azure-pipelines-templates/update-dependents.yml@templates  
+    parameters:
       repositoriesToUpdate: |
         System.Device.Spi
-    displayName: Update dependent class libs
 
 ##################################
 # report build failure to Discord
