@@ -97,7 +97,10 @@ jobs:
   # update dependents
   - template: azure-pipelines-templates/update-dependents.yml@templates  
     parameters:
-      waitBeforeUpdate: eq(variables['UPDATE_DEPENDENTS'], 'false')
+      ${{ if eq(variables['UPDATE_DEPENDENTS'], 'true') }}:
+        waitBeforeUpdate: false
+      ${{ else }}:
+        waitBeforeUpdate: true
       repositoriesToUpdate: |
         System.Device.Spi
 
