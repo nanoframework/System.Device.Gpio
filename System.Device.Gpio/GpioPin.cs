@@ -146,7 +146,7 @@ namespace System.Device.Gpio
         /// <summary>
         /// Reads the current value of the general-purpose I/O (GPIO) pin.
         /// </summary>
-        /// <returns>The current value of the GPIO pin. If the pin is configured as an output, this value is the last value written to the pin.</returns>
+        /// <returns>The current value of the GPIO pin. If the pin is configured as an output, the read value is undetermined.</returns>
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern PinValue Read();
 
