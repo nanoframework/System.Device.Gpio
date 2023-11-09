@@ -2,7 +2,19 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/System.Device.Gpio/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.22...HEAD)
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.28...HEAD)
+
+**Documentation and other chores:**
+
+- Update 2 NuGet dependencies [\#71](https://github.com/nanoframework/System.Device.Gpio/pull/71)
+- Update 1 NuGet dependencies [\#70](https://github.com/nanoframework/System.Device.Gpio/pull/70)
+- Improve comment for GpioPin.Read\(\) [\#69](https://github.com/nanoframework/System.Device.Gpio/pull/69)
+- Update 1 NuGet dependencies [\#68](https://github.com/nanoframework/System.Device.Gpio/pull/68)
+- Update 1 NuGet dependencies [\#67](https://github.com/nanoframework/System.Device.Gpio/pull/67)
+
+## [v1.1.28](https://github.com/nanoframework/System.Device.Gpio/tree/v1.1.28) (2022-12-27)
+
+[Full Changelog](https://github.com/nanoframework/System.Device.Gpio/compare/v1.1.22...v1.1.28)
 
 **Documentation and other chores:**
 
