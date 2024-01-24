@@ -60,6 +60,16 @@ steps:
   parameters:
     sonarCloudProject: 'nanoframework_lib-System.Device.Gpio'
 
+# update dependents
+- template: azure-pipelines-templates/update-dependents.yml@templates  
+  parameters:
+    ${{ if eq(variables['UPDATE_DEPENDENTS'], 'false') }}:
+      waitBeforeUpdate: false
+    ${{ else }}:
+      waitBeforeUpdate: true
+    repositoriesToUpdate: |
+      System.Device.Spi
+
 # step from template @ nf-tools repo
 # report error
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
