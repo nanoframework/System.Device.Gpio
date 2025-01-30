@@ -45,21 +45,9 @@ variables:
   - name: nugetPackageName
     value: 'nanoFramework.System.Device.Gpio'
 
-  variables:
-    - group: sign-client-credentials
-    - name: DOTNET_NOLOGO
-      value: true  
-    - name: buildPlatform
-      value: 'Any CPU'  
-    - name: buildConfiguration
-      value: 'Release'
-    - name: solution
-      value: 'nanoFramework.System.Device.Gpio.sln'
-    - name: nugetPackageName
-      value: 'nanoFramework.System.Device.Gpio'   
-
 # step from template @ nf-tools repo
-# all build, update and publish steps
+# all build, update and publish 
+steps:
 - template: azure-pipelines-templates/class-lib-build.yml@templates
   parameters:
     sonarCloudProject: 'nanoframework_lib-System.Device.Gpio'
@@ -74,70 +62,9 @@ variables:
     repositoriesToUpdate: |
       System.Device.Spi
 
-##############################
-- job: Update_Dependents
-  condition: >-
-    or(
-      and(
-        succeeded(),
-        startsWith(variables['Build.SourceBranch'], 'refs/tags/v'),
-        eq(variables['StartReleaseCandidate'], 'false')
-      ),
-      and(
-        succeeded(),
-        contains(variables['getCommitMessage.COMMIT_MESSAGE'], '***UPDATE_DEPENDENTS***'),
-        eq(variables['StartReleaseCandidate'], 'false')
-      ),
-      eq(variables['UPDATE_DEPENDENTS'], 'true')
-    )
-
-  dependsOn:
-  - Build_Library
-
-  pool:
-    vmImage: 'windows-latest'
-
-  variables:
-    DOTNET_NOLOGO: true
-
-  steps:
-
-  - checkout: none
-
-  # update dependents
-  - template: azure-pipelines-templates/update-dependents.yml@templates  
-    parameters:
-      ${{ if eq(variables['UPDATE_DEPENDENTS'], 'true') }}:
-        waitBeforeUpdate: false
-      ${{ else }}:
-        waitBeforeUpdate: true
-      repositoriesToUpdate: |
-        System.Device.Spi
-
-##################################
 # report build failure to Discord
-- job: Report_Build_Failure
-  
-  dependsOn:
-  - Build_Library
-  - Update_Dependents
-  condition: >-
-    or(
-      failed('Build_Library'),
-      failed('Update_Dependents')
-    )
-
-  pool:
-    vmImage: 'windows-latest'
-
-  steps:
-  
-  - checkout: self
-
-  # step from template @ nf-tools repo
-  # report error
-  - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
-    parameters:
-      status: 'failure'
-      webhookUrl: '$(DiscordWebhook)'
-      message: ''
+- template: azure-pipelines-templates/discord-webhook-task.yml@templates
+  parameters:
+    status: 'failure'
+    webhookUrl: '$(DiscordWebhook)'
+    message: ''
