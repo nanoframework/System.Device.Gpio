@@ -19,8 +19,8 @@
 This package requires a target with System.Device.Gpio v$nativeVersion$ (checksum $checksum$).</description>
     <tags>nanoFramework C# csharp netmf netnf Gpio</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.30" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.7" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.31" />
     </dependencies>
   </metadata>
   <files>
