@@ -12,8 +12,7 @@
     <ProjectGuid>{80b5c789-f9fc-43bf-9595-e8855af83219}</ProjectGuid>
     <OutputType>Library</OutputType>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>System.Device.Gpio</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <NF_IsCoreLibrary>True</NF_IsCoreLibrary>
@@ -68,11 +67,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.29\lib\netnano1.0\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.30\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.2.0.0-preview.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.2.0.0-preview.2\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
