@@ -51,6 +51,7 @@ steps:
 - template: azure-pipelines-templates/class-lib-build.yml@templates
   parameters:
     sonarCloudProject: 'nanoframework_lib-System.Device.Gpio'
+    usePreviewBuild: true
 
 # update dependents
 - template: azure-pipelines-templates/update-dependents.yml@templates  
